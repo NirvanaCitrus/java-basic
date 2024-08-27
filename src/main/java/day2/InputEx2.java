@@ -11,7 +11,7 @@ public class InputEx2 {
 
         int dan = sc.nextInt();
 
-        for (int i = 2; i <= 9; i++) {
+        for (int i = 1; i <= 9; i++) {
             System.out.println(dan + " X " + i + " = " + (dan*i));
 
 
