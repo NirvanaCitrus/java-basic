@@ -26,9 +26,10 @@ public class NameApp {
         // =================
 
         Scanner sc = new Scanner(System.in);
-        String[] nameList = new String[5]; // null 값으로 채워짐.
-        int[] ageList = new int[5];
-        int count = 0;
+//        String[] nameList = new String[5]; // null 값으로 채워짐.
+        ArrayList<String> names = new ArrayList<>();
+//        int[] ageList = new int[5];
+        ArrayList<Integer> ages = new ArrayList<>();
 
         while (true) {
             System.out.println("명령어 입력: ");
@@ -39,25 +40,19 @@ public class NameApp {
                 break;
 
             } else if (command.equals("add")) {
-                if (count < nameList.length) {
-                    System.out.println("이름을 입력해주세요: ");
-                    String name = sc.nextLine();
-                    System.out.println("나이를 입력해주세요: ");
-                    int age = Integer.parseInt(sc.nextLine());
-                    nameList[count] = name;
-                    ageList[count] = age;
-                    System.out.println(name + "이 명부에 저장되었습니다.");
-                    count++;
-
-                } else {
-                    System.out.println("명부가 가득 찼습니다.");
-                }
+                System.out.println("이름을 입력해주세요: ");
+                String name = sc.nextLine();
+                System.out.println("나이를 입력해주세요: ");
+                int age = Integer.parseInt(sc.nextLine());
+                names.add(name);
+                ages.add(age);
+                System.out.println(name + "이 명부에 저장되었습니다.");
 
 
             } else if (command.equals("list")) {
                 System.out.println("===== 이름 목록 =====");
-                for (int i = 0; i < count; i++) {
-                    System.out.println(nameList[i] + "," + ageList[i]);
+                for (int i = 0; i < names.size(); i++) {
+                    System.out.println(i + " . " + names.get(i) + "," + ages.get(i));
                 }
             } else if (command.equals("help")) {
                 System.out.println("add : 이름 입력");
