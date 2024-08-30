@@ -1,14 +1,26 @@
 package day4.methodReturn;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VendingMachine2 {
 
     // 값을 세팅 X
     // 연습용으로 하나의 객체만 사용할 때는 미리 넣어두는 것이 편함.
 
-    String[] drinks = {" 콜라 ", " 사이다 ", " 커피 "};
-    int[] price = {1000, 1200, 800};
+
     int remainder = 0;
-    int[] count = {1, 2, 1};
+    ArrayList<Drinks> beverages = new ArrayList<>();
+
+    public VendingMachine2() {
+        Drinks d1 = new Drinks("콜라", 1000, 1);
+        Drinks d2 = new Drinks("사이다", 1200, 2);
+        Drinks d3 = new Drinks("커피", 800, 1);
+        beverages.add(d1);
+        beverages.add(d2);
+        beverages.add(d3);
+
+    }
 
     public void inputMoney(int money) {
         remainder = remainder + money; // 증감연산
@@ -17,19 +29,22 @@ public class VendingMachine2 {
     }
 
     public String selectBeverage(int target) {
-        if (price[target] > remainder) {
+        Drinks beverage = beverages.get(target);
+        if (beverage.price > remainder) {
             return "잔액 부족"; // return 하게 되면 메소드는 거기서 종료. 더이상 밑으로 안내려감.
-        }
-        if (count[target] <= 0) {
-            return "품절";
 
         }
 
-        remainder = remainder - price[target];
-        remainder -= price[target]; // 차감연산
-        count[target]--;
+        if (beverage.quantity <= 0) {
+            return "수량 부족";
 
-        return drinks[target];
+        }
+
+//        remainder = remainder - prices.get(target);
+        remainder -= beverage.price; // 차감연산
+        beverage.quantity--;
+
+        return beverage.name;
 
     }
 
@@ -38,9 +53,9 @@ public class VendingMachine2 {
     }
 
     public void printBeverages() {
-        for (int i = 0; i < drinks.length; i++) {
-            System.out.println("===== 음료 목록 =====");
-            System.out.println(i + ". " + drinks[i] + " : " + price[i] + "원," + " 남은 수량: " + count[i] + " 개 ");
+        System.out.println("===== 음료 목록 =====");
+        for (int i = 0; i < beverages.size(); i++) {
+            System.out.println(i + ". " + beverages.get(i).name + " : " + beverages.get(i).price + "원," + " 남은 수량: " + beverages.get(i).quantity + " 개 ");
         }
     }
 }

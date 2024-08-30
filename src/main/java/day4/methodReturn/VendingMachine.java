@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class VendingMachine {
     Scanner sc = new Scanner(System.in);
     int remainder = 0;
-    //    String[] drinks = {" 콜라 ", " 사이다 ", " 커피 "};
+        String[] drinks = {" 콜라 ", " 사이다 ", " 커피 "};
     ArrayList<String> beverages = new ArrayList<>() {{
         add(0, "콜라");
         add(1, "사이다");
@@ -30,6 +30,12 @@ public class VendingMachine {
         add(2);
         add(1);
     }};
+
+    // 배열 대신에 동적 배열로 바뀌었을 때 단순히 ArrayList가 아닌 ArrayList<Integer> count = new ArrayList<>(){{}} 이 안에서 동작을 하는 경우
+    // 클래스 안에서는 보통 변수 선언 혹은 함수 정의 작업만 가능하기 때문에 대입 연산, 출력 연산 등등 컴퓨터가 계산 혹은 연산하는 작업을 진행 할수 없다.
+    // 따라서 여기에서는 ArrayList 안에서 그 리스트에 add 하는 기능은 대입 연산에 속하기 때문에 {{}} 이 중괄호 안에서 초기화를 하면서 작업을 실행해주어야 한다.
+    // 클래스와 연산을 작동시키는 차이점에서 잘 살펴가면서 코드를 진행시키는게 좋겠다.
+
 
     // 왜 int 대신에 void 값을 썻는가?
     // int 는 return 값을 요구하기에 어떤 특정한 값을 계산해서 그 숫자를 다시 사용하는 상황에서만 사용이 가능하다.
