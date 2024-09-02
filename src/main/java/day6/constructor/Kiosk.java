@@ -154,11 +154,9 @@ public class Kiosk {
                     drinkCart.clear();
                     sideCart.clear();
                     total = 0;
-
                 } else {
                     System.out.println("주문이 취소되었습니다.");
                 }
-
             } else {
                 System.out.println("잘못 선택하셨습니다.");
                 continue;
