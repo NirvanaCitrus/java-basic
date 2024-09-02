@@ -8,10 +8,6 @@ public class Kiosk {
     ArrayList<SoftDrinks> softDrinks = new ArrayList<>();
     ArrayList<SideMenu> sideMenus = new ArrayList<>();
 
-    ArrayList<Hamburger> selectedHamburgers = new ArrayList<>();
-    ArrayList<SoftDrinks> selectedDrinks = new ArrayList<>();
-    ArrayList<SideMenu> selectedSides = new ArrayList<>();
-
     ArrayList<Hamburger> burgerCart = new ArrayList<>();
     ArrayList<SoftDrinks> drinkCart = new ArrayList<>();
     ArrayList<SideMenu> sideCart = new ArrayList<>();
@@ -148,7 +144,20 @@ public class Kiosk {
 
 
             } else if (menu == 5) {
-                System.out.println("정말로 주문하시겠습니까?");
+                System.out.println("정말로 주문하시겠습니까? (y/n)");
+                String confirm = sc.nextLine();
+                if (confirm.equals("y")) {
+                    System.out.println("주문이 완료되었습니다.");
+                    System.out.println(" 총 금액 " + total + "원 입니다.");
+
+                    burgerCart.clear();
+                    drinkCart.clear();
+                    sideCart.clear();
+                    total = 0;
+
+                } else {
+                    System.out.println("주문이 취소되었습니다.");
+                }
 
             } else {
                 System.out.println("잘못 선택하셨습니다.");
