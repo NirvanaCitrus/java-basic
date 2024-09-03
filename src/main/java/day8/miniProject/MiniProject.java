@@ -1,6 +1,7 @@
 package day8.miniProject;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -60,6 +61,10 @@ class Homepage {
     Scanner sc = new Scanner(System.in);
     ArrayList<Post> posts = new ArrayList<>();
     int postIdCounter = 1; // 가장 최신의 id값. id값의 고유성을 유지하기 위해 1씩 증가시킬 계획임.
+
+    public Homepage () {
+        initializeTestPosts();
+    }
 
     public void Start() {
         while (true) {
@@ -125,7 +130,7 @@ class Homepage {
 
                 for (Post post : posts) {
                     if (post.getId() == id) {
-                        posts.remove(post);
+                        posts.remove(post); // index 가 아니 값을 넣어서 해당 값을 삭제할 수도 있다.
                         System.out.println(id + "번 게시물이 삭제되었습니다.");
                         found = true;
                         break;
@@ -150,7 +155,23 @@ class Homepage {
                     }
                 }
 
+            } else if (command.equals("search")) {
+                System.out.println("검색 키워드를 입력해주세요 : ");
+                String keyWord = sc.nextLine();
+
+                for (Post post : posts) {
+
+
+                }
+
             }
         }
+    }
+
+
+    private void initializeTestPosts () {
+        posts.add(new Post(postIdCounter++,"정처기 따야되나요?","null",LocalDate.now().minusDays(1),LocalTime.now().minusHours(1)));
+        posts.add(new Post(postIdCounter++,"안녕하세요. 자바 관련 질문입니다.","자바 관련 질문",LocalDate.now().minusDays(1),LocalTime.now().minusHours(1)));
+        posts.add(new Post(postIdCounter++,"Dbs 질문입니다.","질문",LocalDate.now().minusDays(1),LocalTime.now().minusHours(1)));
     }
 }
