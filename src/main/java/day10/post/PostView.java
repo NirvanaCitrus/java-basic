@@ -9,7 +9,7 @@ public class PostView {
         for (Post post : targetList) {
             System.out.printf("번호 : %d\n", post.getId());
             System.out.printf("제목 : %s\n", post.getTitle());
-            System.out.println("작성자 : " + post.getCreator());
+            System.out.println("조회수 : " + post.getViewcount());
             System.out.println("==================");
         }
     }
@@ -19,6 +19,7 @@ public class PostView {
         System.out.printf("제목 : %s\n", post.getTitle());
         System.out.printf("내용 : %s\n", post.getContent());
         System.out.printf("등록날짜 : %s\n", post.getCreationDate());
-        System.out.printf("조회수 : %d\n", post.getLikecount());
+        System.out.printf("조회수 : %d\n", post.getViewcount());
+
     }
 }

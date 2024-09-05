@@ -32,7 +32,11 @@ class Homepage {
             if (command.equals("exit")) {
                 System.out.println("See you again!");
                 break;
-
+//                각 기능을 함수화 ->
+//
+//                        - 가독성이 좋아지고 재활용성
+//                - 지역변수(함수에서만 사용하고 버림)
+//                        - 외부에 영향을 최소화
             } else if (command.equals("signup")) {
                 signUp();
 
