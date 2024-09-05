@@ -1,6 +1,7 @@
 package day8.miniProject;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,6 +23,8 @@ class Post {
     private ArrayList<Comment> comments;
     private String creator;
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd ; HH:mm:ss");
+
     public Post(int id, String title, String content, LocalDateTime creationDate, String creator) {
         this.id = id;
         this.title = title;
@@ -32,6 +35,10 @@ class Post {
         this.comments = new ArrayList<>();
         this.creator = creator;
 
+    }
+
+    public String getFormattedCreationDate () {
+        return creationDate.format(formatter);
     }
 
     public String getCreator() {
@@ -92,6 +99,8 @@ class Comment {
     private String content;
     private LocalDateTime creationDate;
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd ; HH:mm:ss");
+
     public Comment(String content, LocalDateTime creationDate) {
         this.content = content;
         this.creationDate = creationDate;
@@ -102,8 +111,8 @@ class Comment {
         return content;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public String getFormattedCreationDate() {
+        return creationDate.format(formatter);
     }
 }
 
@@ -215,7 +224,7 @@ class Homepage {
     public void showPosts() {
         while (true) {
             for (Post post : posts) {
-                System.out.println(post.getId() + ") " + post.getTitle() + " - 작성일: " + post.getCreationDate());
+                System.out.println(post.getId() + ") " + post.getTitle() + " - 작성일: " + post.getFormattedCreationDate());
 
 
             }
@@ -227,12 +236,14 @@ class Homepage {
             } else if (command == 2) {
                 if (loggedInUser == null) {
                     System.out.println("게시물을 작성하려면 먼저 로그인해야 합니다.");
+                    return;
                 } else {
                     addPost();
                 }
             } else if (command == 3) {
                 loggedInUser = null;
                 System.out.println("로그아웃되었습니다.");
+                return;
             } else if (command == 4) {
                 break;
             } else {
@@ -263,7 +274,7 @@ class Homepage {
                 System.out.println("게시물 번호 : " + post.getId());
                 System.out.println("제목 : " + post.getTitle());
                 System.out.println("내용 : " + post.getContent());
-                System.out.println("작성일 : " + post.getCreationDate());
+                System.out.println("작성일 : " + post.getFormattedCreationDate());
                 System.out.println("조회수 : " + post.getViewcount());
                 System.out.println("좋아요 : " + post.getLikecount());
                 System.out.println("댓글 수 : " + post.getComments().size());
@@ -273,7 +284,7 @@ class Homepage {
                     System.out.println("===== 댓글 =====");
                     for (Comment comment : post.getComments()) {
                         System.out.println(comment.getContent());
-                        System.out.println("작성일: " + comment.getCreationDate());
+                        System.out.println("작성일: " + comment.getFormattedCreationDate());
                         System.out.println("-------");
 
                     }
@@ -388,8 +399,9 @@ class Homepage {
 
 
     private void initializeTestPosts() {
-        posts.add(new Post(postIdCounter++, "정처기 따야되나요?", "null", LocalDateTime.now(), loggedInUser.getUsername()));
-        posts.add(new Post(postIdCounter++, "안녕하세요. 자바 관련 질문입니다.", "자바 관련 질문", LocalDateTime.now(), loggedInUser.getUsername()));
-        posts.add(new Post(postIdCounter++, "Dbs 질문입니다.", "질문", LocalDateTime.now(), loggedInUser.getUsername()));
+        String defaultUsername = "TestUser";
+        posts.add(new Post(postIdCounter++, "정처기 따야되나요?", "null", LocalDateTime.now(), defaultUsername));
+        posts.add(new Post(postIdCounter++, "안녕하세요. 자바 관련 질문입니다.", "자바 관련 질문", LocalDateTime.now(), defaultUsername));
+        posts.add(new Post(postIdCounter++, "Dbs 질문입니다.", "질문", LocalDateTime.now(), defaultUsername));
     }
 }
