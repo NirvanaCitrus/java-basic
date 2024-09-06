@@ -4,10 +4,10 @@ package day10.miniProject;
 import day10.post.PostController;
 import day10.post.PostDao;
 import day10.post.PostView;
+import day10.userAuthentication.UserAuthentication;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HomepageApp {
@@ -15,12 +15,10 @@ public class HomepageApp {
 
 class Homepage {
     Scanner sc = new Scanner(System.in);
-    ArrayList<User> users = new ArrayList<>();
-    User loggedInUser = null;
-    private static int postIdCounter = 4;
     PostDao postDao = new PostDao();
     PostView postView = new PostView();
     PostController postController = new PostController();
+    UserAuthentication userAuth = new UserAuthentication();
 
 
     public void Run() {
@@ -38,10 +36,10 @@ class Homepage {
 //                - 지역변수(함수에서만 사용하고 버림)
 //                        - 외부에 영향을 최소화
             } else if (command.equals("signup")) {
-                signUp();
+                userAuth.signUp();
 
             } else if (command.equals("login")) {
-                login();
+                userAuth.login();
 
             } else if (command.equals("add")) {
                 postController.add();
@@ -62,57 +60,10 @@ class Homepage {
                 postController.search();
 
             } else if (command.equals("logout")) {
-                loggedInUser = null;
-                System.out.println("로그아웃 되었습니다.");
+                userAuth.logout();
 
             }
         }
-    }
-
-
-    private void signUp() {
-        System.out.println("회원 가입");
-        System.out.println("사용할 아이디를 입력해주세요: ");
-        String userId = sc.nextLine();
-
-        for (User user : users) {
-            if (user.getUserId().equals(userId)) {
-                System.out.println("이미 사용중인 아이디입니다. 다시 시도하세요");
-                return;
-
-            }
-
-        }
-
-        System.out.println("사용할 비밀번호를 입력하세요: ");
-        String password = sc.nextLine();
-
-        System.out.println("사용할 닉네임을 입력하세요: ");
-        String username = sc.nextLine();
-
-        User newUser = new User(userId, password, username);
-        users.add(newUser);
-        System.out.println("회원 가입이 완료되었습니다.");
-    }
-
-    private void login() {
-        System.out.println("로그인");
-        System.out.println("아이디를 입력하세요: ");
-        String userId = sc.nextLine();
-        System.out.println("비밀번호를 입력하세요: ");
-        String password = sc.nextLine();
-
-        for (User user : users) {
-            if (user.getUserId().equals(userId) && user.getPassword().equals(password)) {
-                loggedInUser = user;
-                System.out.println("로그인 성공! " + loggedInUser.getUsername() + "님 환영합니다.");
-                return;
-
-            }
-
-        }
-        System.out.println("로그인 실패. 아이디 또는 비밀번호를 확인해주세요.");
-
     }
 
 

@@ -3,6 +3,7 @@ package day10.post;
 
 
 import day10.miniProject.CommentDao;
+import day10.miniProject.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -66,7 +67,7 @@ class Post {
 
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd ; HH:mm:ss");
 
-    public Post(int id, String title, String content, LocalDateTime creationDate, int viewcount) {
+    public Post(int id, String title, String content, LocalDateTime creationDate, int viewcount, String creator) {
         this.id = id;
         this.title = title;
         this.content = content;

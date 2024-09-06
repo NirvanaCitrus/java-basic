@@ -1,29 +1,35 @@
 package day10.miniProject;
 
+import java.util.ArrayList;
+
 public class UserDao {
+    private ArrayList<User> users = new ArrayList<>();
+
+    public void addUser (User user) {
+        users.add(user);
+    }
+
+    public boolean isUserIdTaken (String userId) {
+        for (User user : users) {
+            if (user.getUserId().equals(userId)) {
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
+    public User getUserById (String userId) {
+        for (User user : users) {
+            if (user.getUserId().equals(userId)) {
+                return user;
+
+            }
+        }
+        return null;
+    }
+
 
 }
 
-class User {
-    private String userId;
-    private String password;
-    private String username;
-
-    public User (String userId, String password, String username) {
-        this.userId = userId;
-        this.password = password;
-        this.username = username;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-}
