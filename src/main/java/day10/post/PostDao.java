@@ -2,16 +2,20 @@ package day10.post;
 
 
 
+import day10.likeFunction.LikeManager;
 import day10.miniProject.CommentDao;
 import day10.miniProject.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 // 창고 관리(Model)
 public class PostDao {
     private ArrayList<Post> posts = new ArrayList<>();
+    private List<Post> orderPost = new ArrayList<>();
+
 
 
     //누군가에게 Post를 넘겨받아서 창고(ArrayList)에 저장 해주는 기능
@@ -27,6 +31,23 @@ public class PostDao {
     // 창고에서 특정 물건을 제거함
     public void delete(Post post) {
         posts.remove(post);
+
+    }
+
+    public ArrayList<Post> getPostForPage (int page,int postsPerPage) {
+        int startIndex = (page - 1) * postsPerPage;
+        int endIndex = Math.min(startIndex + postsPerPage, posts.size());
+
+        if (startIndex >= posts.size() || startIndex < 0) {
+            return new ArrayList<>();
+
+        }
+        return new ArrayList<>(posts.subList(startIndex, endIndex));
+
+    }
+
+    public int getTotalPages (int postsPerPage) {
+        return (int) Math.ceil((double) posts.size() / postsPerPage);
 
     }
 
@@ -61,9 +82,10 @@ class Post {
     private String content;
     private LocalDateTime creationDate;
     private int viewcount;
-    private int likecount;
     private ArrayList<CommentDao> comments;
     private String creator;
+    private LikeManager likeManager;
+    private int likecount;
 
     public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd ; HH:mm:ss");
 
@@ -73,9 +95,29 @@ class Post {
         this.content = content;
         this.creationDate = creationDate;
         this.viewcount = 0;
-        this.likecount = 0;
         this.comments = new ArrayList<>();
         this.creator = creator;
+        this.likeManager = new LikeManager();
+    }
+
+    public boolean toggleLike(String username) {
+        return likeManager.toggleLike(username);
+
+    }
+
+    public boolean hasUserLiked(String username) {
+        return likeManager.hasUserLiked(username);
+
+    }
+
+    public int getLikecount () {
+        return likeManager.getLikeCount();
+    }
+
+    public void addComment (CommentDao comment) {
+        this.comments.add(comment);
+        System.out.println("댓글이 추가되었습니다.");
+
     }
 
     public int getId() {
@@ -118,14 +160,6 @@ class Post {
         this.viewcount = viewcount;
     }
 
-    public int getLikecount() {
-        return likecount;
-    }
-
-    public void setLikecount(int likecount) {
-        this.likecount = likecount;
-    }
-
     public ArrayList<CommentDao> getComments() {
         return comments;
     }
@@ -140,5 +174,9 @@ class Post {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public String getFormattedCreationDate () {
+        return creationDate.format(formatter);
     }
 }

@@ -15,16 +15,16 @@ public class HomepageApp {
 
 class Homepage {
     Scanner sc = new Scanner(System.in);
-    PostDao postDao = new PostDao();
-    PostView postView = new PostView();
-    PostController postController = new PostController();
     UserAuthentication userAuth = new UserAuthentication();
+    PostDao postDao = new PostDao();
+    PostView postView = new PostView(userAuth);
+    PostController postController = new PostController(userAuth);
 
 
     public void Run() {
         while (true) {
             System.out.println("======= Satellite =======");
-            System.out.println("명령어를 입력하세요 (signup, login, add, list, update, delete, detail, search, logout, exit): ");
+            System.out.println("명령어를 입력하세요 (signup, login, add, list, update, delete, detail, page, search, sort, logout, exit): ");
             String command = sc.nextLine();
 
             if (command.equals("exit")) {
@@ -56,8 +56,14 @@ class Homepage {
             } else if (command.equals("detail")) {
                 postController.detail();
 
+            } else if (command.equals("page")) {
+                postController.Page();
+
             } else if (command.equals("search")) {
                 postController.search();
+
+            } else if (command.equals("sort")) {
+                postController.sort();
 
             } else if (command.equals("logout")) {
                 userAuth.logout();
